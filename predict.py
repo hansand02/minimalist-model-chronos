@@ -4,6 +4,9 @@ import argparse
 
 import joblib
 import pandas as pd
+import torch
+import numpy as np
+from chronos import Chronos2Pipeline
 
 
 def predict(model_path, historic_data_path, future_data_path, out_file_path):
@@ -20,14 +23,38 @@ def predict(model_path, historic_data_path, future_data_path, out_file_path):
     out_file_path : str
         Path where predictions will be saved.
     """
-    model = joblib.load(model_path)
-    future_df = pd.read_csv(future_data_path)
-    features = future_df[["rainfall", "mean_temperature"]].fillna(0)
+    model = Chronos2Pipeline.from_pretrained(model_path, device_map="cpu")
 
-    predictions = model.predict(features)
-    output_df = future_df[["time_period", "location"]].copy()
-    output_df["sample_0"] = predictions
-    output_df.to_csv(out_file_path, index=False)
+    past_data = pd.read_csv(historic_data_path)
+    future_df = pd.read_csv(future_data_path)
+
+
+    future_count = len(pd.unique(future_df["time_period"]))
+
+    n_samples = 100
+    quantile_levels = np.round(np.linspace(0.01, 0.99, n_samples), 4).tolist()
+
+    pred_df = model.predict_df(
+        past_data,
+        future_df,
+        prediction_length=future_count,
+        target="disease_cases",
+        id_column="location",
+        quantile_levels=quantile_levels,  # Quantile for probabilistic forecast
+        timestamp_column="time_period",
+        cross_learning=True
+    )
+
+    # Chronos returns full dates (2022-10-01), which chap reads as days; convert back to months
+    pred_df["time_period"] = pd.to_datetime(pred_df["time_period"]).dt.strftime("%Y-%m")
+
+    # chap only reads columns named sample_0..sample_N, so rename the quantile columns
+    quantile_cols = [c for c in pred_df.columns if c not in ("location", "time_period", "target_name", "predictions")]
+    out = pred_df[["location", "time_period"]].copy()
+    for i, col in enumerate(quantile_cols):
+        out[f"sample_{i}"] = pred_df[col].values
+
+    out.to_csv(out_file_path, index=False)
     print(f"Predictions saved to {out_file_path}")
 
 

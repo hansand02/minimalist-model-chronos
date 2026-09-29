@@ -7,4 +7,7 @@ dependencies = [
     "pandas",
     "scikit-learn",
     "joblib",
+    "chronos-forecasting>=2.3.2",
+    "numpy>=2.2.6",
+    "torch>=2.14.0",
 ]
