@@ -1,6 +1,5 @@
 runs/
-output/
-!output/.gitkeep
 __pycache__/
 *.pyc
 .venv/
+.idea/

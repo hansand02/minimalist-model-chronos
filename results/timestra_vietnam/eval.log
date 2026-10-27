@@ -1,0 +1,57 @@
+2026-10-27T10:57:01 [INFO   ] Database URL not set [chap_core.database.database]
+2026-10-27T10:57:01 [INFO   ] Database url not set. Database operations will not work [chap_core.database.database]
+2026-10-27T10:57:01 [INFO   ] Evaluating model models/timestra with xarray/NetCDF output [chap_core.cli_endpoints.evaluate]
+2026-10-27T10:57:01 [INFO   ] Level set to INFO [root]
+2026-10-27T10:57:01 [INFO   ] Loading dataset from input/vietnam.csv [root]
+2026-10-27T10:57:01 [INFO   ] Loading polygons from input/vietnam.geojson [root]
+2026-10-27T10:57:01 [INFO   ] Remaining regions: ['VN-01', 'VN-02', 'VN-03', 'VN-04', 'VN-05', 'VN-06', 'VN-07', 'VN-09', 'VN-13', 'VN-14', 'VN-18', 'VN-20', 'VN-21', 'VN-22', 'VN-23', 'VN-24', 'VN-25', 'VN-26', 'VN-27', 'VN-28', 'VN-29', 'VN-30', 'VN-31', 'VN-32', 'VN-33', 'VN-34', 'VN-35', 'VN-36', 'VN-37', 'VN-39', 'VN-40', 'VN-41', 'VN-43', 'VN-44', 'VN-45', 'VN-46', 'VN-47', 'VN-49', 'VN-50', 'VN-51', 'VN-52', 'VN-53', 'VN-54', 'VN-55', 'VN-56', 'VN-57', 'VN-58', 'VN-59', 'VN-61', 'VN-63', 'VN-66', 'VN-67', 'VN-68', 'VN-69', 'VN-70', 'VN-71', 'VN-72', 'VN-73', 'VN-CT', 'VN-DN', 'VN-HN', 'VN-HP', 'VN-SG'] with 63 entries [chap_core.rest_api.db_worker_functions]
+2026-10-27T10:57:01 [INFO   ] Loading model template from models/timestra [chap_core.cli_endpoints.evaluate]
+Traceback (most recent call last):
+  File "/Users/hansandersen/.local/bin/chap", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/cli.py", line 56, in main
+    app()
+    ~~~^^
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/cyclopts/core.py", line 2223, in __call__
+    result = _run_maybe_async_command(command, bound, resolved_backend)
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/cyclopts/_run.py", line 44, in _run_maybe_async_command
+    return command(*bound.args, **bound.kwargs)
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/cli_endpoints/evaluate.py", line 78, in eval_cmd
+    _run_eval(
+    ~~~~~~~~~^
+        model_name=model_name,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        estimator_options=estimator_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/cli_endpoints/evaluate.py", line 219, in _run_eval
+    template = ModelTemplate.from_directory_or_github_url(
+        model_name,
+    ...<5 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/models/model_template.py", line 72, in from_directory_or_github_url
+    return get_model_template_from_directory_or_github_url(  # type: ignore[return-value]
+        model_template_path,
+    ...<5 lines>...
+        as_chapkit=as_chapkit,
+    )
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/models/utils.py", line 211, in get_model_template_from_directory_or_github_url
+    working_dir = _get_model_code_base(model_template_path, base_working_dir, run_dir_type)
+  File "/Users/hansandersen/.local/share/uv/tools/chap-core/lib/python3.14/site-packages/chap_core/models/utils.py", line 110, in _get_model_code_base
+    shutil.copytree(
+    ~~~~~~~~~~~~~~~^
+        model_path,
+        ^^^^^^^^^^^
+    ...<2 lines>...
+        dirs_exist_ok=True,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/hansandersen/.local/share/uv/python/cpython-3.14.0-macos-aarch64-none/lib/python3.14/shutil.py", line 652, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'models/timestra'
