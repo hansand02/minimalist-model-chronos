@@ -12,26 +12,13 @@ baselines and pymc?
 - [x] log1p target (+ 10x cap on extreme quantiles) for Chronos-2, Timestral, TabPFN-TS
 - [x] Datasets: chap_benchmarking set (Vietnam 63, Laos 18, Thailand 77 provinces), `input/`
 - [x] Protocol: chap_benchmarking (horizon 3, 6 splits, stride 1, climatology), `Makefile`
-- [ ] Run every model in `models/` + chap_pymc + mstl_arima on all three datasets
-- [ ] Compare with the chap models' scores on chap-benchmarking.dhis2.org (needs API token)
-- [ ] Score: CRPS and CRPS log1p, bootstrap CI over locations
-- [ ] Write up in a results page
+- [x] Run every model in `models/` + chap_pymc + mstl_arima on all three datasets
+- [x] Compare with the chap models' scores on chap-benchmarking.dhis2.org (needs API token)
+- [x] Score: CRPS and CRPS log1p, bootstrap CI over locations
+- [x] Write up in a results page
 
-## 2. Spatial cross-learning ("liquid flowing" between provinces and over time)
 
-Idea: let outbreaks in one province inform its neighbours, with the influence spreading
-over the map and decaying over time, like a liquid flowing through the province graph.
-
-- [x] Province polygons: `input/*.geojson`
-- [ ] Adjacency graph (provinces sharing a border)
-- [ ] Diffusion features: neighbour incidence at lags 1-3, weighted by graph distance and
-      decaying with time (e.g. heat-kernel / exponential decay on the graph)
-- [ ] Feed them as covariates to Chronos-2 and TabPFN-TS; compare with plain cross-learning
-- [ ] Ablation: Chronos-2 with `cross_learning=False` (is the current cross-learning doing anything?)
-- [ ] Variant: Chronos-2 / Timestral cross-learning restricted to regions or neighbourhoods
-- [ ] Tune on Vietnam only, test once on the held-out datasets
-
-## 3. Later
+## 2. Later
 
 - [ ] Fine-tune Chronos-2 on OpenDengue (excluding eval countries) and compare with zero-shot
       (thesis issue #2)

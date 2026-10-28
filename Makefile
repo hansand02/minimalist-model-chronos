@@ -5,6 +5,7 @@
 #   make MODEL=chronos2 DATA=laos           # one dataset
 #   make MODEL=https://github.com/dhis2-chap/chap_pymc
 #   make MODEL=chronos2 HORIZON=3 SPLITS=36     # longer test window: 36 splits, ~3 years
+#   make MODEL=chronos2 WEATHER=observed        # real future weather instead of climatology
 #
 # MODEL is a folder in models/ or a GitHub URL. Output per dataset goes to
 # results/<model>_<data>/ (eval.nc, eval.html, metrics.csv, eval.log). A dataset whose
@@ -17,11 +18,12 @@ MODEL ?= chronos2
 DATA ?= vietnam laos thailand
 HORIZON ?= 3
 SPLITS ?= 6
+WEATHER ?= climatology
 
 NAME := $(notdir $(MODEL))
 MODEL_PATH := $(if $(findstring ://,$(MODEL)),$(MODEL),models/$(MODEL))
 # Runs with other than the chap_benchmarking horizon/splits get their own folders
-SUFFIX := $(if $(filter-out 3_6,$(HORIZON)_$(SPLITS)),_h$(HORIZON)_s$(SPLITS))
+SUFFIX := $(if $(filter-out 3_6,$(HORIZON)_$(SPLITS)),_h$(HORIZON)_s$(SPLITS))$(if $(filter-out climatology,$(WEATHER)),_$(WEATHER))
 METRICS := $(foreach d,$(DATA),results/$(NAME)_$(d)$(SUFFIX)/metrics.csv)
 export TABPFN_TOKEN ?= $(shell cat ~/.tabpfn_token 2>/dev/null)
 
@@ -34,5 +36,6 @@ results/$(NAME)_%$(SUFFIX)/metrics.csv: input/%.csv $(wildcard $(MODEL_PATH)/*)
 	chap eval --model-name $(MODEL_PATH) --dataset-csv $< --output-file $(@D)/eval.nc \
 		--backtest-params.n-periods $(HORIZON) --backtest-params.n-splits $(SPLITS) \
 		--backtest-params.stride 1 --backtest-params.n-retrain 1 \
+		--backtest-params.future-weather-provider $(WEATHER) \
 		--run-config.run-directory-type latest --plot 2>&1 | tee $(@D)/eval.log
 	chap export-metrics --input-files $(@D)/eval.nc --output-file $@

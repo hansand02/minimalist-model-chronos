@@ -8,6 +8,8 @@ import torch
 import numpy as np
 from chronos import Chronos2Pipeline
 
+COVARIATES = ["rainfall", "mean_temperature"]
+
 
 def predict(model_path, historic_data_path, future_data_path, out_file_path):
     """Generate predictions using the trained model.
@@ -25,8 +27,9 @@ def predict(model_path, historic_data_path, future_data_path, out_file_path):
     """
     model = Chronos2Pipeline.from_pretrained(model_path, device_map="cpu")
 
-    past_data = pd.read_csv(historic_data_path)
-    future_df = pd.read_csv(future_data_path)
+    # Same covariates as the other foundation models; chap's CSVs also carry an index column
+    past_data = pd.read_csv(historic_data_path)[["location", "time_period", "disease_cases", *COVARIATES]]
+    future_df = pd.read_csv(future_data_path)[["location", "time_period", *COVARIATES]]
 
     # Forecast log(1 + cases) so outbreak peaks are not huge outliers; undone with expm1 below.
     # The upper quantiles blow up when transformed back, so cap them at 10x the location's record.
