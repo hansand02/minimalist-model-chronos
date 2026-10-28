@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 .venv/
 .idea/
+work/
+slurm-*.log
+work/
+slurm-*.log
