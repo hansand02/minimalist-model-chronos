@@ -1,0 +1,10 @@
+[project]
+name = "timesfm3-chap"
+version = "0.1.0"
+description = "Zero-shot TimesFM 3.0 as a CHAP model"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "numpy",
+    "timesfm[torch]==3.0.2",
+]

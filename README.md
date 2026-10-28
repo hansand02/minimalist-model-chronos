@@ -20,6 +20,7 @@ climatology future weather. Results go to `results/<model>_<data>/`.
 | `chronos2` | Chronos-2 zero-shot, log1p target, cross-learning |
 | `timestral` | Timestral zero-shot |
 | `t0_gamma` | T0-gamma zero-shot, rainfall + temperature as future covariates |
+| `timesfm3` | TimesFM 3.0 zero-shot, rainfall + temperature as future covariates (non-commercial weights) |
 | `tabpfn_ts` | TabPFN-TS (needs `~/.tabpfn_token`) |
 | `mantis` | Mantis zero-shot, no covariates |
 | `seasonal_naive` | Baseline |
