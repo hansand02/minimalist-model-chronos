@@ -1,0 +1,2 @@
+filename,model_name,model_version,ratio_above_truth,crps,crps_log1p,crps_norm,mae,mape,sensitivity,specificity,outbreak_accuracy,coverage_10_90,coverage_25_75,rmse,winkler_score_10_90,winkler_score_25_75,winkler_score_10_90_log1p,winkler_score_25_75_log1p
+eval.nc,models/t0_gamma,unknown,0.3182638888888889,86.4688604543089,0.8013323166217313,0.044502758854507926,116.81056834283683,79.96738397037811,0.5,0.8,0.625,0.6215277777777778,0.375,231.74289817893495,577.2053600427515,387.73254762245705,5.271428539431828,3.6214011415302867

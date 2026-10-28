@@ -23,7 +23,7 @@ Idea: let outbreaks in one province inform its neighbours, with the influence sp
 over the map and decaying over time, like a liquid flowing through the province graph.
 
 - [x] Province polygons: `input/*.geojson`
-- [x] Adjacency graph (provinces sharing a border): `models/chronos2_spatial/adjacency.json`
+- [ ] Adjacency graph (provinces sharing a border)
 - [ ] Diffusion features: neighbour incidence at lags 1-3, weighted by graph distance and
       decaying with time (e.g. heat-kernel / exponential decay on the graph)
 - [ ] Feed them as covariates to Chronos-2 and TabPFN-TS; compare with plain cross-learning

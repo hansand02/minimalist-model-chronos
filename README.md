@@ -18,8 +18,8 @@ climatology future weather. Results go to `results/<model>_<data>/`.
 | Model | What |
 |---|---|
 | `chronos2` | Chronos-2 zero-shot, log1p target, cross-learning |
-| `chronos2_spatial` | `chronos2` + neighbour-incidence covariate (`adjacency.json`) |
 | `timestral` | Timestral zero-shot |
+| `t0_gamma` | T0-gamma zero-shot, rainfall + temperature as future covariates |
 | `tabpfn_ts` | TabPFN-TS (needs `~/.tabpfn_token`) |
 | `mantis` | Mantis zero-shot, no covariates |
 | `seasonal_naive` | Baseline |

@@ -1,0 +1,10 @@
+[project]
+name = "t0-gamma-chap"
+version = "0.1.0"
+description = "Zero-shot T0-gamma as a CHAP model"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "numpy",
+    "tfc-t0[torch]>=0.6.0",
+]
